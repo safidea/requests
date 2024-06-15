@@ -1,16 +1,17 @@
 import type { Spec } from '@safidea_/engine/spec'
+import type { Translation } from '../translations'
 
-export const createRequestSpecs: Spec[] = [
+export const createRequestSpecs = (t: Translation): Spec[] => [
   {
     name: 'should display the page title',
     when: [
       {
-        open: '/',
+        open: t.path + '/',
       },
     ],
     then: [
       {
-        title: 'Safidea Requests',
+        title: 'Requests by Safidea',
       },
     ],
   },
@@ -18,20 +19,20 @@ export const createRequestSpecs: Spec[] = [
     name: 'should display the form',
     when: [
       {
-        open: '/',
+        open: t.path + '/',
       },
     ],
     then: [
       {
-        text: 'Get Started',
-        tag: 'h2',
+        text: t.createRequest.title,
+        tag: 'h4',
       },
       {
-        text: 'Get started with Request',
+        text: t.createRequest.paragraph,
         tag: 'p',
       },
       {
-        text: 'Send message',
+        text: t.createRequest.send,
         tag: 'button',
       },
     ],
@@ -40,7 +41,7 @@ export const createRequestSpecs: Spec[] = [
     name: 'should submit the form',
     when: [
       {
-        open: '/get-started',
+        open: t.path + '/',
       },
       {
         fill: 'email',
@@ -55,14 +56,10 @@ export const createRequestSpecs: Spec[] = [
         value: 'I would like to get started with Request.',
       },
       {
-        fill: 'message',
-        value: 'Hello, I would like to get started with Request.',
+        click: t.createRequest.send,
       },
       {
-        click: 'Send message',
-      },
-      {
-        waitForText: 'Your message has been sent.',
+        waitForText: t.createRequest.successMessage,
       },
       {
         waitForAutomation: 'send-confirmation-email',
@@ -70,11 +67,11 @@ export const createRequestSpecs: Spec[] = [
     ],
     then: [
       {
-        text: 'Your message has been sent.',
+        text: t.createRequest.successMessage,
         tag: 'p',
       },
       {
-        table: 'leads',
+        table: 'requests',
         find: [
           {
             field: 'email',

@@ -1,8 +1,9 @@
 import type { App } from '@safidea_/engine'
 import { sendConfirmationEmail } from './automations/sendConfirmationEmail'
 import { createRequest } from './pages/createRequest'
-import { createRequestSpecs } from './pages/createRequest.spec'
+import { createRequestSpecs } from './specs/createRequest.spec'
 import { requests } from './tables/requests'
+import { translations } from './translations'
 /*import { login } from './pages/login'
 import { loginSpecs } from './pages/login.spec'
 import { listRequests } from './pages/listRequests'
@@ -11,15 +12,16 @@ import { updateRequest } from './pages/updateRequest'*/
 
 export const app: App = {
   name: 'Safidea Requests',
-  features: [
-    {
-      name: 'create-request',
-      specs: createRequestSpecs,
-      pages: [createRequest],
-      tables: [requests],
-      automations: [sendConfirmationEmail],
-    },
-    /*{
+  features: translations
+    .map((t) => [
+      {
+        name: 'create-request',
+        specs: createRequestSpecs(t),
+        pages: [createRequest(t)],
+        tables: [requests],
+        automations: [sendConfirmationEmail],
+      },
+      /*{
       name: 'login',
       specs: loginSpecs,
       pages: [login],
@@ -30,7 +32,8 @@ export const app: App = {
       pages: [listRequests, updateRequest],
       tables: [requests],
     },*/
-  ],
+    ])
+    .flat(),
   server: {
     port: '$PORT',
   },

@@ -1,14 +1,15 @@
 import type { Page } from '@safidea_/engine/page'
+import type { Translation } from '../translations'
 
-export const createRequest: Page = {
+export const createRequest = (t: Translation): Page => ({
   name: 'create-request',
-  path: '/',
+  path: t.path + '/',
   head: {
-    title: 'Safidea Requests - Get Started',
+    title: 'Requests by Safidea',
     metas: [
       {
         name: 'description',
-        content: 'Get started with Safidea Requests',
+        content: 'Requests by Safidea',
       },
     ],
   },
@@ -16,100 +17,62 @@ export const createRequest: Page = {
     {
       component: 'Header',
       title: {
-        text: 'Safidea Requests',
+        text: 'Requests by Safidea',
       },
-      links: [
-        {
-          label: 'Home',
-          href: '/',
-        },
-        {
-          label: 'Get Started',
-          href: '/get-started',
-        },
-        {
-          label: 'Contact',
-          href: '/contact',
-        },
-      ],
+      links: [],
       buttons: [
         {
-          label: 'Login',
-          href: '/login',
+          label: t.header.aboutUsButton,
+          href: 'https://safidea.com',
         },
       ],
     },
     {
       component: 'Form',
-      action: '/api/table/leads',
+      action: '/api/table/requests',
       method: 'POST',
       title: {
-        text: 'Get Started',
+        text: t.createRequest.title,
       },
       paragraph: {
-        text: 'Get started with Request',
+        text: t.createRequest.paragraph,
       },
       inputs: [
         {
           name: 'email',
-          label: 'Your email',
-          placeholder: 'name@solumy.com',
+          label: t.createRequest.email,
+          placeholder: t.createRequest.emailPlaceholder,
           type: 'email',
           required: true,
         },
         {
           name: 'name',
-          label: 'Your name',
-          placeholder: 'John Doe',
+          label: t.createRequest.name,
+          placeholder: t.createRequest.namePlaceholder,
           type: 'text',
           required: true,
         },
         {
           name: 'subject',
-          label: 'Subject',
-          placeholder: 'I would like to get started with Request.',
+          label: t.createRequest.subject,
+          placeholder: t.createRequest.subjectPlaceholder,
           type: 'text',
           required: true,
         },
         {
           name: 'message',
-          label: 'Your message',
-          placeholder: 'Hello, I would like to get started with Request.',
-          type: 'text',
-          required: true,
+          label: t.createRequest.details,
+          placeholder: t.createRequest.detailsPlaceholder,
+          type: 'textarea',
         },
       ],
       buttons: [
         {
           type: 'submit',
-          label: 'Send message',
+          label: t.createRequest.send,
         },
       ],
-      successMessage: 'Your message has been sent.',
-    },
-    {
-      component: 'Footer',
-      title: {
-        text: 'Request',
-      },
-      paragraph: {
-        text: 'Request is a tech company based in Paris, France.',
-      },
-      links: [
-        {
-          label: 'Home',
-          href: '/',
-        },
-        {
-          label: 'Get Started',
-          href: '/get-started',
-        },
-        {
-          label: 'Contact',
-          href: '/contact',
-        },
-      ],
-      copyright: '© 2021 Request',
+      successMessage: t.createRequest.successMessage,
     },
   ],
-}
+})
